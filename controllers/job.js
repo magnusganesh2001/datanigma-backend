@@ -15,9 +15,10 @@ exports.getJobs = async (req,res,next) => {
   }
 }
 
-exports.getJobsOfEmployer = (req,res,next) => {
+exports.getJobsOfEmployer = async (req,res,next) => {
   try {
-    const jobs = Job.find({employer: req.params.employer});
+    var ObjectId = require('mongoose').Types.ObjectId;
+    const jobs = await Job.find();
     console.log(jobs);
     res.status(201).json({
       message: 'Jobs fetched successfully',
