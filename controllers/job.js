@@ -22,7 +22,6 @@ exports.getJobsOfEmployer = async (req,res,next) => {
       if (value.employer == req.body.id) return true;
       return false;
     });
-    console.log(jobs);
     res.status(201).json({
       message: 'Jobs fetched successfully',
       jobs: jobs
@@ -83,6 +82,11 @@ exports.updateJob = (req,res,next) => {
 exports.applyJob = async (req, res, next) => {
   const { jobId, candidateId } = req.body;
   let job = await Job.findById(jobId);
+  if (job.candidates.includes(candidateId))
+    return res.status(500).json({
+      message: 'Already applied',
+      job: job
+    });
   job.candidates.push(candidateId);
   job.save().then(result => {
     res.status(201).json({
