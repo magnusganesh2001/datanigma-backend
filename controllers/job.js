@@ -1,4 +1,5 @@
 const Job = require("../models/job");
+const user = require("../models/user");
 
 exports.getJobs = async (req,res,next) => {
   try {
@@ -98,4 +99,39 @@ exports.applyJob = async (req, res, next) => {
       message: "Job failed to update!"
     });
   });
-}
+};
+
+exports.getCandidates = async (req, res, next) => {
+  try {
+    const userId = req.userData.id;
+    let jobs = await Job.find();
+    jobs = jobs.filter(job => {
+      if (job.employer === userId) return true;
+      return false;
+    });
+    let candidates = []
+    await jobs.forEach(async (job) => {
+      let c = []
+      await job.candidates.forEach(async (candidate) => {
+        let ca = await user.findById(candidate);
+        c.push({
+          name: ca.name,
+          email: ca.email,
+          phone: ca.phone,
+          resume: ca.resume,
+          jobTitle: job.title,
+          jobDesc: job.description
+        });
+      });
+    });
+    res.status(200).json({
+      message: 'Applied candidates fetched',
+      candidates: c
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Failed to retrieve candidates',
+      error
+    });
+  }
+};
