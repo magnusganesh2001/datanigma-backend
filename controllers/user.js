@@ -51,7 +51,7 @@ exports.userLogin = (req,res,next) => {
       });
     }
     const token = jwt.sign(
-      { name: fetchedUser.name, company: fetchedUser.company, email: fetchedUser.email, id: fetchedUser._id },
+      { name: fetchedUser.name, company: fetchedUser.company, email: fetchedUser.email, type: fetchedUser.type, id: fetchedUser._id },
       JWT_KEY,
       { expiresIn: '1h' }
     );
