@@ -17,11 +17,9 @@ exports.getJobs = async (req,res,next) => {
 
 exports.getJobsOfEmployer = async (req,res,next) => {
   try {
-    var ObjectId = require('mongoose').Types.ObjectId;
     let jobs = await Job.find();
-    console.log(req);
     jobs = jobs.filter(value => {
-      if (value.employer == req.userData.id) return true;
+      if (value.employer == req.body.id) return true;
       return false;
     });
     console.log(jobs);
@@ -39,9 +37,7 @@ exports.getJobsOfEmployer = async (req,res,next) => {
 }
 
 exports.addJob = (req,res,next) => {
-  console.log(req.body);
   const job = new Job(req.body);
-  console.log(job);
   job.save().then(result => {
     res.status(201).json({
       message: 'Job added successfully!',
@@ -83,3 +79,19 @@ exports.updateJob = (req,res,next) => {
     });
   });
 };
+
+exports.applyJob = async (req, res, next) => {
+  const { jobId, candidateId } = req.body;
+  let job = await Job.findById(jobId);
+  job.candidates.push(candidateId);
+  job.save().then(result => {
+    res.status(201).json({
+      message: 'Job updated successfully!',
+      job: job
+    });
+  }).catch(error => {
+    res.status(500).json({
+      message: "Job failed to update!"
+    });
+  });
+}

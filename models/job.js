@@ -6,7 +6,8 @@ const jobSchema = mongoose.Schema({
   salary: { type: String, required: true },
   company: { type: String, required: true },
   location: { type: String, required: true },
-  employer: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }
+  employer: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  candidates: [ { type: mongoose.Schema.Types.ObjectId, ref: "Candidate" } ] 
 });
 
 module.exports = mongoose.model('Job', jobSchema);
