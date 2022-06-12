@@ -53,9 +53,7 @@ exports.addJob = (req,res,next) => {
 };
 
 exports.updateJob = (req,res,next) => {
-  const job = new Job({
-
-  });
+  const job = new Job(req.body);
   Job.updateOne({_id: job._id, employer: job.employer}, job).then(result => {
     if (result.nModified > 0) {
       res.status(200).json({
@@ -120,7 +118,11 @@ exports.getCandidates = async (req, res, next) => {
           phone: ca.phone,
           resume: ca.resume,
           jobTitle: job.title,
-          jobDesc: job.description
+          jobDesc: job.description,
+          jobSalary: job.salary,
+          jobType: job.jobType,
+          jobSkills: job.skills,
+          jobLanguages: job.languages,
         });
       });
     });

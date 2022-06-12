@@ -8,7 +8,11 @@ const userSchema = mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   type: { type: String, required: true },
-  resume: { type: String }
+  resume: { type: String },
+  languagesKnown: { type: String },
+  skills: [{ type: String }],
+  technologies: [{ type: String }],
+  location: { type: String }
 });
 
 userSchema.plugin(uniqueValidator);
