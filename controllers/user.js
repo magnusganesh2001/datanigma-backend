@@ -59,6 +59,7 @@ exports.userLogin = (req, res, next) => {
             const token = jwt.sign({
                     name: fetchedUser.name,
                     company: fetchedUser.company,
+                    companyUrl: fetchedUser.companyUrl,
                     email: fetchedUser.email,
                     type: fetchedUser.type,
                     id: fetchedUser._id,
