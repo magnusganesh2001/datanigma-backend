@@ -8,7 +8,6 @@ config.config();
 const JWT_KEY = process.env.JWT_KEY;
 const ENDPOINT = process.env.ENDPOINT;
 
-<<<<<<< HEAD
 exports.createUser = (req, res, next) => {
     bcrypt.hash(req.body.password, 10).then((hash) => {
         console.log(hash);
@@ -35,19 +34,6 @@ exports.createUser = (req, res, next) => {
                     message: "Invalid authentication credentials",
                 });
             });
-=======
-exports.createUser = (req,res,next) => {  
-  bcrypt.hash(req.body.password, 10).then(hash => {
-    console.log(hash);
-    const user = new User({
-      name: req.body.name,
-      company: req.body.company,
-      companyUrl: req.body.companyUrl,
-      phone: req.body.phone,
-      email: req.body.email,
-      password: hash,
-      type: req.body.type
->>>>>>> 7007143 (update url)
     });
 };
 
