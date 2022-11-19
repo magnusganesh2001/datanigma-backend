@@ -45,7 +45,8 @@ exports.addJob = (req, res, next) => {
         });
     }).catch(error => {
         return res.status(500).json({
-            message: "Job failed to add!"
+            message: "Job failed to add!",
+            error
         });
     });
 };
@@ -71,7 +72,8 @@ exports.updateJob = (req, res, next) => {
         Job.findById({ _id: job._id }).then(job => { oldJob = job; });
         return res.status(500).json({
             message: "Failed to update job data!",
-            job: oldJob
+            job: oldJob,
+            error
         });
     });
 };
@@ -93,7 +95,8 @@ exports.applyJob = async(req, res, next) => {
     }).catch(error => {
         console.log(error);
         return res.status(500).json({
-            message: "Job failed to update!"
+            message: "Job failed to update!",
+            error
         });
     });
 };
