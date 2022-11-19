@@ -106,6 +106,7 @@ const getCandidatesList = async(jobs) => {
     jobs.forEach(job => {
         job.candidates.forEach(ca => {
             c.push({
+                id: ca._id,
                 name: ca.name,
                 email: ca.email,
                 phone: ca.phone,
@@ -125,7 +126,7 @@ const getCandidatesList = async(jobs) => {
 exports.getCandidates = async(req, res, next) => {
     try {
         const userId = req.userData.id;
-        let jobs = await Job.find({ 'employer': userId }).populate({ path: 'candidates', model: 'User', select: ['name', 'email', 'phone', 'resume', '_id'] });
+        let jobs = await Job.find({ 'employer': userId }).populate({ path: 'candidates', model: 'User', select: ['name', 'email', 'phone', 'resume'] });
         let candidates = await getCandidatesList(jobs);
         return res.status(200).json({
             message: 'Applied candidates fetched',

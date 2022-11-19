@@ -88,7 +88,14 @@ exports.getUserData = async(req, res, next) => {
         if (user != null)
             res.status(200).json({
                 message: "User Data fetched successfully",
-                user: user,
+                user: {
+                    'id': user._id,
+                    'name': user.name,
+                    'email': user.email,
+                    'phone': user.phone,
+                    'location': user.location,
+                    'resume': user.resume
+                },
             });
         else
             throw new Error();
